@@ -1,30 +1,30 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import AlertMessageModal from "../Alert/AlertMessageModal";
 import Wrapper from "../Helpers/Wrapper";
 import "./UserForm.css";
 
 const UserForm = (props) => {
-  const [enteredUserName, setEnteredUserName] = useState("");
-  const [enteredUserAge, setEnteredUserAge] = useState("");
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
+  const collegeNameInputRef = useRef();
+
   const [error, setError] = useState();
-
-  const userNameHandler = (e) => {
-    setEnteredUserName(e.target.value);
-  };
-
-  const userAgeHandler = (e) => {
-    setEnteredUserAge(e.target.value);
-  };
 
   const submitHandler = (e) => {
     e.preventDefault();
+    const enteredUserName = nameInputRef.current.value;
+    const enteredUserAge = ageInputRef.current.value;
+    const enteredCollegeName = collegeNameInputRef.current.value;
+    console.log(enteredCollegeName);
+
     if (
       enteredUserName.trim().length === 0 ||
-      enteredUserAge.trim().length === 0
+      enteredUserAge.trim().length === 0 ||
+      enteredCollegeName.trim().length === 0
     ) {
       setError({
         title: "Invalid Input",
-        message: "Please enter a valid name and age (non-empty values).",
+        message: "Please enter a valid username, age (non-empty values) and college name.",
       });
       return;
     }
@@ -39,10 +39,12 @@ const UserForm = (props) => {
     const userData = {
       name: enteredUserName,
       age: enteredUserAge,
+      collegeName: enteredCollegeName
     };
     props.userData(userData);
-    setEnteredUserName("");
-    setEnteredUserAge("");
+    nameInputRef.current.value = '';   // generally avoids because it breaks the react's declarative approach nature 
+    ageInputRef.current.value = '';    // generally avoids because it breaks the react's declarative approach nature
+    collegeNameInputRef.current.value = ''; // generally avoids because it breaks the react's declarative approach nature
   };
 
   const errorHandler = () => {
@@ -64,16 +66,21 @@ const UserForm = (props) => {
             <label>UserName</label>
             <input
               type="text"
-              value={enteredUserName}
-              onChange={userNameHandler}
+              ref={nameInputRef}
             />
           </div>
           <div className="new-user__control">
             <label>Age (Years)</label>
             <input
               type="number"
-              value={enteredUserAge}
-              onChange={userAgeHandler}
+              ref={ageInputRef}
+            />
+          </div>
+          <div className="new-user__control">
+            <label>College Name</label>
+            <input
+              type="text"
+              ref={collegeNameInputRef}
             />
           </div>
           <div className="new-user__actions">

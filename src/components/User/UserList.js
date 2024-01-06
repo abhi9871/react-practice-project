@@ -10,7 +10,7 @@ const UserList = (props) => {
                        return (
                           <li key={user.id}>
                             <Card className='user-list'>
-                            {user.name} ({user.age} {age})
+                            {user.collegeName} - {user.name} ({user.age} {age})
                             </Card>
                             </li>
                        )
