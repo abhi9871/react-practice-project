@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AlertMessageModal from "../Alert/AlertMessageModal";
+import Wrapper from "../Helpers/Wrapper";
 import "./UserForm.css";
 
 const UserForm = (props) => {
@@ -49,7 +50,7 @@ const UserForm = (props) => {
   };
 
   return (
-    <div>
+    <Wrapper>
       {error && (
         <AlertMessageModal
           title={error.title}
@@ -80,7 +81,7 @@ const UserForm = (props) => {
           </div>
         </div>
       </form>
-    </div>
+    </Wrapper>
   );
 };
 
